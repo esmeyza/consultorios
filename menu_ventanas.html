@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Consultorios</title>
+   <link rel="stylesheet" href="styles/menu.css">
+   
+</head>
+<body>
+    <section class="services-section">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div id="accordion-container" class="accordion-container"></div>
+        </div>
+    </section>
+
+    <div id="service-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body">
+                <img id="modal-img" src="" alt="Imagen del servicio" class="modal-image">
+                <h3 id="modal-title">Título del Servicio</h3>
+                <p id="modal-desc">Aquí va la descripción....</p>
+                <button class="modal-action-btn">Cotizar Servicio</button>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/menu.js"></script>
+</body>
+</html>

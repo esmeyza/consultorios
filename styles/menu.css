@@ -1,0 +1,199 @@
+/* --- ESTILO FARMACIAS YZA (Azules y Blancos Clínicos) --- */
+
+/* Variables de Personalización */
+:root {
+    /* Azul corporativo fuerte (similar al logo de Yza) */
+    --primary-color: #0054A6; 
+    
+    /* Azul más oscuro para efectos hover (interacción) */
+    --primary-dark: #003d7a;
+    
+    /* Fondo muy clarito (azul casi blanco) para cabeceras */
+    --bg-header: #f4f8fb;
+    
+    /* Texto gris oscuro para lectura fácil */
+    --text-color: #333333;
+    
+    /* Variables para los Chips (Botones de servicio) */
+    --chip-bg: #ffffff;
+    --chip-border: #dbe4ee;
+    --chip-text: #555;
+}
+
+/* Estilo General (Opcional: asegura una fuente limpia si no la tienes) */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+}
+
+/* Estilo del Acordeón (Tipo Caja Médica) */
+.accordion-item {
+    background-color: #fff;
+    border: 1px solid #e1e8ed; /* Borde más sutil */
+    border-radius: 8px;
+    margin-bottom: 15px; 
+    overflow: hidden;
+    /* Sombra suave para dar profundidad */
+    box-shadow: 0 4px 6px rgba(0, 84, 166, 0.05); 
+}
+
+.accordion-header {
+    background-color: var(--bg-header);
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700; /* Letra más gruesa */
+    font-size: 1.1rem;
+    color: var(--primary-color); /* Texto azul corporativo */
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.accordion-header:hover {
+    background-color: #e6f0fa; /* Un azul un poco más visible al pasar el mouse */
+}
+
+/* Contenedor de Servicios */
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #fff;
+}
+
+/* Grid de "Chips" */
+.services-grid {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+/* ESTILO DE LOS CHIPS (BURBUJAS) 
+   Ahora parecen botones clínicos limpios
+*/
+.service-chip {
+    background-color: var(--chip-bg);
+    color: var(--chip-text);
+    padding: 15px 10px;
+    border-radius: 8px; /* Bordes menos redondos, más tarjeta */
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    user-select: none;
+    border: 1px solid var(--chip-border);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Efecto al pasar el mouse sobre un servicio */
+.service-chip:hover {
+    background-color: var(--primary-color);
+    color: #ffffff; /* Texto blanco para contraste */
+    transform: translateY(-3px);
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(0, 84, 166, 0.2);
+}
+
+/* --- Estilos del Modal --- */
+.modal-overlay {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 30, 60, 0.7); /* Fondo oscuro con tono azulado */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px); /* Efecto borroso moderno */
+}
+
+.modal-content {
+    background: white;
+    padding: 0; /* Quitamos padding general para que la imagen toque bordes si quieres */
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+    overflow: hidden; /* Para que la imagen respete los bordes redondos */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 28px;
+    color: white; /* X blanca porque estará sobre la imagen o cabecera */
+    cursor: pointer;
+    z-index: 10;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Cuerpo del modal con padding */
+.modal-body {
+    padding: 20px 25px 25px 25px;
+}
+
+.modal-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block; /* Elimina espacio extra abajo de la imagen */
+    margin-bottom: 0;
+}
+
+#modal-title {
+    color: var(--primary-color);
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+#modal-desc {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.modal-action-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modal-action-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Por defecto (Desktop) mantenemos tu altura fija elegante */
+.modal-image {
+    height: 220px; 
+    object-fit: cover;
+}
+
+/* En celulares (pantallas menores a 480px) */
+@media (max-width: 480px) {
+    .modal-image {
+        /* Hacemos la imagen un poco más alta en celular para que luzca más */
+        height: 250px; 
+    }
+}
