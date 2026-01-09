@@ -1,0 +1,921 @@
+/* =========================================
+   CONSULTORIOS YZA - PACK PREMIUM (UX/UI)
+   ========================================= */
+
+/* --- 1. VARIABLES & CONFIGURACIÓN --- */
+:root {
+    --primary-blue: #000099;
+    --primary-dark: #000066;
+    --accent-green: #00E600;
+    --text-dark: #333;
+    --bg-white: #FFFFFF;
+    --bg-celeste-premium: #EBF5FB; /* Celeste sutil para secciones */
+    
+    /* Sombras Premium (Azuladas, no negras) */
+    --shadow-soft: 0 10px 30px rgba(0, 0, 153, 0.05);
+    --shadow-hover: 0 20px 40px rgba(0, 0, 153, 0.12);
+    
+    --font-main: 'Poppins', sans-serif;
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+/* --- 2. ACCESIBILIDAD (GRADO MÉDICO) --- */
+/* Focus visible y personalizado para navegación con teclado */
+:focus-visible {
+    outline: 3px solid var(--accent-green);
+    outline-offset: 3px;
+}
+
+/* Respetar preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Clases utilitarias */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+img { max-width: 100%; display: block; }
+.section-padding { padding: 60px 0; }
+
+/* =========================================
+   3. NAVBAR GLASSMORPHISM (CRISTAL)
+   ========================================= */
+.consultorios-navbar-wrapper {
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    
+    /* Efecto Cristal */
+    background-color: rgba(0, 0, 153, 0.85); /* Azul con transparencia */
+    backdrop-filter: blur(12px); /* Borrosidad estilo iPhone */
+    -webkit-backdrop-filter: blur(12px); /* Safari support */
+    
+    border-radius: 50px;
+    box-shadow: 0 8px 32px rgba(0, 0, 153, 0.2); /* Sombra difusa */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil brillante */
+    
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.navbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px; /* ESTA ES LA ALTURA TOTAL */
+    padding-right: 30px;
+}
+
+.nav-logo-tab {
+    background-color: rgba(0, 0, 153, 0.85);;
+    height: 100%; 
+    /* Reducimos el padding arriba/abajo a 0 para dar máximo espacio al logo */
+    padding: 0 35px 0 20px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Curva a la derecha */
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    margin-right: 20px;
+    flex-shrink: 0; /* Evita que se aplaste */
+}
+
+.nav-logo-img {
+    /* CAMBIO CLAVE: Quitamos los 40px fijos */
+    height: 100%;       /* Ocupa toda la altura disponible */
+    width: auto;        /* El ancho se ajusta solo */
+    max-height: 65px;   /* Límite para que no se salga */
+    object-fit: contain; /* Asegura que se vea completo sin recortes */
+    display: block;
+}
+
+/* Ajuste para móvil (para que no se rompa al cambiar de tamaño) */
+@media (max-width: 900px) {
+    .nav-logo-tab {
+        width: 100%;
+        border-radius: 0; /* Sin curva en móvil */
+        justify-content: center; /* Centrado técnico */
+        
+        /* AQUÍ ESTÁ EL TRUCO PARA MOVERLO A LA DERECHA: */
+        /* Agregamos padding extra a la izquierda para empujarlo visualmente */
+        padding-left: 20px; 
+        padding-right: 0; 
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .nav-logo-img {
+        /* En móvil lo hacemos un poco más grande que antes */
+        max-height: 50px; 
+        
+        /* Opcional: Si aún sientes que necesita ir más a la derecha, sube este valor */
+        margin-left: 10px; 
+    }
+}
+
+.logo-link {
+    display: flex;          /* Para comportarse como caja flexible */
+    align-items: center;    /* Centrar verticalmente */
+    justify-content: center;/* Centrar horizontalmente */
+    height: 100%;           /* Ocupar toda la altura de la pestaña blanca */
+    width: 100%;            /* Ocupar todo el ancho disponible */
+    text-decoration: none;  /* Quitar subrayados por si acaso */
+}
+
+.nav-links-area { flex: 1; display: flex; justify-content: space-between; align-items: center; }
+.nav-menu { display: flex; gap: 20px; }
+
+.c-nav-link {
+    color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    position: relative; white-space: nowrap; padding: 5px 0;
+}
+
+/* Animación Hover Nav (Línea que crece) */
+.c-nav-link::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 0%; height: 2px;
+    background: var(--accent-green); transition: width 0.3s ease;
+}
+.c-nav-link:hover::after { width: 100%; }
+
+/*nav-partners img { height: 24px; opacity: 0.9; }*/
+
+.nav-partners {
+    display: flex;          /* Los pone en fila horizontal */
+    align-items: center;    /* Los centra verticalmente */
+    gap: 20px;              /* Espacio entre cada logo */
+    margin-left: 20px;      /* Un poco de aire extra a la izquierda para separarlos del menú */
+}
+
+.partner-logo {
+    height: 40px;           /* Altura fija para que se vean uniformes (ajusta si lo ves muy chico/grande) */
+    width: auto;            /* El ancho se ajusta solo */
+    opacity: 1;             /* Opacidad al 100% para que se vean nítidos */
+    object-fit: contain;    /* Asegura que no se deformen */
+    display: block;
+    
+}
+
+/* Responsive Nav */
+@media (max-width: 900px) {
+    .consultorios-navbar-wrapper { width: 92%; top: 10px; border-radius: 20px; background-color: var(--primary-blue); /* Menos transparencia en móvil para legibilidad */ }
+    .navbar-inner { height: auto; flex-direction: column; padding: 0; }
+    .nav-logo-tab { width: 100%; justify-content: center; padding: 10px; border-radius: 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .nav-links-area { width: 100%; justify-content: center; padding: 15px 0; }
+    .nav-menu { gap: 15px; flex-wrap: wrap; justify-content: center; }
+    .nav-partners { display: none; }
+}
+
+/* =========================================
+   4. SECCIONES CELESTES & CAROUSEL
+   ========================================= */
+/* --- HERO SECTION: EL FONDO (LA CRUZ Y ONDAS) --- */
+/* --- HERO SECTION CON FONDO YZA --- */
+.hero-section {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /* Ajuste para que el fondo se vea detrás del menú */
+    margin-top: -100px; 
+    padding-top: 140px; 
+    padding-bottom: 60px;
+    
+    /* IMAGEN DE FONDO (LA CRUZ) */
+    background-image: url('https://image.farmaciasyza.mx/lib/fe2f117171640675761075/m/1/98cb6377-a006-4b44-8542-b9540bfaf9ce.png'); 
+    background-size: cover;
+    background-position: center top; 
+    background-repeat: no-repeat;
+}
+
+/* --- CARRUSEL FLOTANTE (SIN BORDES BLANCOS) --- */
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* Quitamos cualquier padding o background que cause bordes blancos */
+    background: transparent; 
+    padding: 0;
+    
+    /* Sombra elegante */
+    box-shadow: 0 20px 50px rgba(0, 50, 150, 0.25); 
+    border-radius: 20px;
+    
+    /* IMPORTANTE: Esto recorta cualquier cosa que se salga de las esquinas redondas */
+    overflow: hidden; 
+}
+
+.carousel-track-container {
+    width: 100%;
+    /* Aseguramos que no haya altura extra generando espacio blanco */
+    height: 100%; 
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    list-style: none;
+    padding: 0; /* Aseguramos que la lista no tenga relleno */
+    margin: 0;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    /* Flexbox elimina el pequeño espacio blanco debajo de las imágenes inline */
+    display: flex; 
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: auto; /* Mantiene la proporción natural */
+    display: block;
+    object-fit: cover; /* Llena el espacio sin bordes */
+    /* Corrección visual: eliminar bordes raros de renderizado */
+    border-radius: 20px; 
+}
+
+/* --- BOTONES (FLECHAS) --- */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 230, 0, 0.2);
+    backdrop-filter: blur(2px);
+    color: white;
+    border: none;
+    
+    /* Tamaño Desktop (Escritorio) */
+    width: 50px; 
+    height: 50px;
+    font-size: 1.2rem;
+    
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.carousel-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+    background: var(--accent-green);
+}
+
+.btn-prev { left: 20px; }
+.btn-next { right: 20px; }
+
+/* --- INDICADORES (PUNTOS) MÁS GRANDES --- */
+.carousel-nav {
+    position: absolute;
+    bottom: 25px; /* Los subimos para que estén SOBRE la imagen */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 12px; /* Más espacio entre puntos */
+    z-index: 20; /* Aseguramos que estén encima de la imagen */
+}
+
+.carousel-indicator {
+    /* AUMENTAMOS EL TAMAÑO */
+    width: 18px; 
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: rgba(255, 255, 255, 0.2); /* Semitransparente inactivo */
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Sombra para que se vean sobre cualquier color */
+}
+
+.carousel-indicator.current-slide {
+    background: var(--accent-green); /* Verde activo */
+    border-color: var(--accent-green);
+    transform: scale(1.1);
+}
+
+/* --- RESPONSIVE (MÓVIL) --- */
+@media (max-width: 768px) {
+    /* 1. Ajuste de fondo en móvil */
+    .hero-section {
+        margin-top: -20px; 
+        padding-top: 40px; 
+        padding-bottom: 30px;
+    }
+
+    /* 2. FLECHAS MÁS PEQUEÑAS EN MÓVIL */
+    .carousel-btn {
+        width: 35px;  /* Reducimos tamaño */
+        height: 35px;
+        font-size: 0.9rem; /* Icono más chico */
+        background: rgba(0, 230, 0, 0.2); /* Un poco más transparente */
+    }
+    
+    .btn-prev { left: 10px; }
+    .btn-next { right: 10px; }
+
+   
+    /* AJUSTE DE PUNTOS: Los bajamos para que no estorben */
+    .carousel-nav {
+        bottom: 5px; /* En escritorio es 25px, aquí lo bajamos casi al borde */
+    }
+
+    /* Opcional: Si quieres que sean un poquito más discretos en móvil */
+    .carousel-indicator {
+        width: 12px;
+        height: 12px;
+        /* Un poco más transparentes para que se vea la foto detrás */
+        background: rgba(255, 255, 255, 0.3); 
+        border-width: 1px; /* Borde más fino */
+    }
+}
+/* --- SECCIONES CON FONDO CELESTE PREMIUM --- */
+.services-section, .promo-section {
+    background-color: var(--bg-celeste-premium);
+    border-radius: 0px; /* Bordes más suaves */
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden; /* Mantiene todo limpio */
+}
+
+/* Mapa se queda blanco para contraste */
+.map-section { background-color: var(--bg-white); }
+
+/* =========================================
+   5. TARJETAS & ANIMACIONES PREMIUM
+   ========================================= */
+.pill-title-container { display: flex; justify-content: center; margin-bottom: 40px; }
+.pill-title {
+    background-color: var(--accent-green); color: white; padding: 10px 40px;
+    border-radius: 50px; box-shadow: 0 8px 20px rgba(0, 230, 0, 0.25); /* Glow verde */
+    text-align: center; font-weight: 700; font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .pill-title {
+        /* Ancho máximo del 90% para que siempre haya margen a los lados */
+        width: 90%; 
+        max-width: 350px; /* Evita que se estiren demasiado */
+        margin: 0 auto; /* Centrado */
+        
+        /* Reducimos el relleno lateral para que quepa más texto */
+        padding: 10px 20px; 
+    }
+
+    .pill-title h2 {
+        /* Letra un poco más pequeña para que quepa en una línea (o dos limpias) */
+        font-size: 1rem; 
+        line-height: 1.2;
+    }
+
+    /* Ajuste extra para el contenedor para asegurar centrado */
+    .pill-title-container {
+        padding: 0 10px; /* Margen de seguridad extra */
+    }
+}
+
+/* Grid Ajustado */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px; align-items: start;
+}
+@media (min-width: 1100px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* Tarjeta de Servicio con Efecto Magnético */
+.service-card {
+    background: white; border-radius: 25px; overflow: hidden;
+    box-shadow: var(--shadow-soft); /* Sombra suave */
+    border: 1px solid rgba(0,0,0,0.01);
+    transition: var(--transition-smooth);
+    cursor: pointer; position: relative;
+    
+    /* Preparación para animación de entrada */
+    opacity: 0; transform: translateY(30px);
+}
+
+.service-card:hover {
+    transform: translateY(-8px); /* Levitar */
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(0, 0, 153, 0.1);
+}
+
+
+
+/* ANIMACIÓN EN CASCADA (STAGGERED) */
+/* Cuando la sección tiene .is-visible, las tarjetas entran una por una */
+.services-section.is-visible .service-card { opacity: 1; transform: translateY(0); }
+.services-section.is-visible .service-card:nth-child(1) { transition-delay: 0.1s; }
+.services-section.is-visible .service-card:nth-child(2) { transition-delay: 0.2s; }
+.services-section.is-visible .service-card:nth-child(3) { transition-delay: 0.3s; }
+.services-section.is-visible .service-card:nth-child(4) { transition-delay: 0.4s; }
+
+/* Contenido de la Tarjeta */
+.service-card.expanded { border-color: var(--primary-blue); grid-row: span 2; box-shadow: 0 20px 50px rgba(0,0,153,0.15); }
+.card-header-img { height: 160px; width: 100%; object-fit: cover; transition: transform 0.5s; }
+.service-card:hover .card-header-img { transform: scale(1.05); /* Zoom sutil en imagen */ }
+.card-content { padding: 20px 25px; position: relative; background: white; z-index: 1; }
+.card-title { color: var(--primary-blue); font-size: 1.15rem; font-weight: 700; margin-bottom: 5px; line-height: 1.3; }
+.expand-indicator { text-align: center; color: var(--accent-green); font-size: 1.3rem; margin-top: -5px; transition: transform 0.4s; }
+.service-card.expanded .expand-indicator { transform: rotate(180deg); }
+
+.card-submenu { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; padding: 0 25px; background-color: #f9fbfd; }
+.service-card.expanded .card-submenu { max-height: 500px; padding-bottom: 25px; }
+
+/* Chips / Botones Internos */
+.submenu-chip {
+    display: block; background: white; border: 1px solid #e1e8ed; padding: 12px 15px;
+    border-radius: 12px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; color: #555;
+    transition: all 0.2s; cursor: pointer;
+}
+.submenu-chip:hover {
+    background: var(--primary-blue); color: white; border-color: var(--primary-blue);
+    padding-left: 20px; /* Desplazamiento interactivo */
+}
+
+/* =========================================
+   6. MAPA & PROMO CON PULSO
+   ========================================= */
+.map-responsive {
+    border-radius: 30px; overflow: hidden; position: relative; padding-bottom: 50%; height: 0;
+    box-shadow: var(--shadow-soft); border: 4px solid white; /* Marco blanco elegante */
+}
+.map-responsive iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+@media (max-width: 768px) {
+    .map-responsive {
+        /* EN MÓVIL: Aumentamos la altura proporcional */
+        padding-bottom: 100%; /* Esto lo hace cuadrado (1:1), mucho más alto */
+        
+        /* O si prefieres una altura fija en píxeles para asegurar visibilidad: */
+        /* padding-bottom: 0; */
+        /* height: 400px; */ 
+    }
+}
+
+/* --- TARJETA PROMO (CORREGIDO) --- */
+
+.promo-card {
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: var(--shadow-soft);
+    
+    /* MÓVIL POR DEFECTO: Columna invertida (Imagen arriba, texto abajo) */
+    flex-direction: column-reverse; 
+    transition: transform 0.3s;
+}
+
+.promo-card:hover { transform: scale(1.01); }
+
+.promo-content {
+    flex: 1;
+    padding: 30px; /* Padding cómodo para móvil */
+    background-color: var(--primary-blue);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.promo-content h2 { 
+    font-size: 1.8rem; 
+    font-weight: 800; 
+    margin-bottom: 20px; 
+}
+
+.highlight-green { color: var(--accent-green); }
+
+/* --- AQUÍ ESTÁ EL ARREGLO PARA MÓVIL --- */
+.promo-image {
+    width: 100%;
+    /* Altura fija en móvil para que no se vea aplastada ni deje huecos */
+    height: 250px; 
+    flex: none; /* IMPORTANTE: Evita que flexbox calcule mal la altura */
+}
+
+.promo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Llena todo el espacio recortando si es necesario */
+    display: block; /* IMPORTANTE: Elimina la línea blanca fantasma de abajo */
+    object-position: top center; /* Enfoca la parte de arriba (la cara) */
+}
+
+/* --- VERSIÓN ESCRITORIO (PANTALLAS GRANDES) --- */
+@media (min-width: 768px) {
+    .promo-card {
+        flex-direction: row; /* Imagen a la derecha, texto a la izquierda */
+    }
+    
+    .promo-content {
+        padding: 50px; /* Más espacio en escritorio */
+    }
+    
+    .promo-content h2 {
+        font-size: 2rem;
+    }
+
+    .promo-image {
+        height: auto; /* En escritorio la altura es automática */
+        flex: 1.2;    /* Ocupa un poco más de espacio que el texto */
+        min-height: 100%; /* Se estira para igualar al texto */
+    }
+}
+
+/* --- BOTÓN CON PULSO --- */
+.btn-pulse {
+    background: var(--accent-green); 
+    color: white; 
+    padding: 12px 35px; 
+    border-radius: 30px;
+    text-decoration: none; 
+    font-weight: 700; 
+    display: inline-block;
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 0, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(0, 230, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 0, 0); }
+}
+
+/* =========================================
+   7. ANIMACIONES GENERALES & MODAL
+   ========================================= */
+.animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; will-change: opacity, transform; }
+.animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+/* Modal Premium */
+.modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 20, 40, 0.6); /* Oscuro azulado */
+    z-index: 2000; justify-content: center; align-items: center; padding: 15px;
+    backdrop-filter: blur(8px); /* Fondo borroso al abrir modal */
+}
+.modal-card-container {
+    width: 100%; max-width: 950px; background: white; border-radius: 30px; overflow: hidden;
+    display: flex; flex-direction: column-reverse; position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4); animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 90vh; overflow-y: auto;
+}
+@media (min-width: 768px) { .modal-card-container { flex-direction: row; overflow-y: visible; } }
+
+.modal-info-side {
+    flex: 1; padding: 40px;
+    background: linear-gradient(135deg, #A8D0FA 0%, #88B9EB 100%);
+    display: flex; flex-direction: column; justify-content: center;
+}
+.modal-image-side { flex: 1.3; height: 250px; }
+@media (min-width: 768px) { .modal-image-side { height: auto; } }
+.modal-image-side img { width: 100%; height: 100%; object-fit: cover; }
+
+.modal-icon-bubble {
+    width: 60px; 
+    height: 60px; 
+    background: white; 
+    border-radius: 20px 20px 20px 0;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-bottom: 20px; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    padding: 12px; /* IMPORTANTE: Un poco de relleno para que el ícono respire */
+}
+
+.modal-bubble-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Para que se vea completo sin recortarse */
+    /* Opcional: Si tus íconos son negros y quieres que sean verdes por código: */
+    /* filter: invert(53%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%); */
+}
+
+#modal-title { color: var(--primary-blue); font-size: 1.8rem; font-weight: 800; line-height: 1.1; margin-bottom: 15px; }
+#modal-desc { color: #003366; font-size: 1rem; line-height: 1.6; margin-bottom: 30px; }
+.modal-back-btn {
+    align-self: flex-start; background: var(--primary-blue); color: white; border: none;
+    padding: 12px 30px; border-radius: 30px; font-weight: 700; cursor: pointer;
+    transition: all 0.2s;
+}
+.modal-back-btn:hover { background: var(--primary-dark); transform: scale(1.05); }
+.close-btn-corner {
+    position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
+    background: rgba(255,255,255,0.9); border-radius: 50%; color: #333;
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+    cursor: pointer; z-index: 10; transition: transform 0.2s;
+}
+.close-btn-corner:hover { transform: rotate(90deg); background: white; }
+
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+
+/* =========================================
+   8. SECCIÓN REDES SOCIALES (MOCKUPS)
+   ========================================= */
+
+.social-section {
+    background-color: white; /* Fondo limpio para contraste */
+    position: relative;
+    overflow: hidden;
+}
+
+.social-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px; /* Separación amplia entre celulares */
+    flex-wrap: wrap;
+    padding-top: 20px;
+}
+
+/* Contenedor de cada "Celular" */
+.social-card {
+    position: relative;
+    width: 280px; /* ANTES: 320px */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    perspective: 1000px;
+}
+
+/* El Marco del Teléfono */
+.phone-frame {
+    width: 100%;
+    height: 450px; /* ANTES: 580px */
+    background: black;
+    border-radius: 20px; /* Un poco menos radio para que cuadre con el tamaño */
+    border: 6px solid #333; /* Borde un poco más fino */
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 
+        0 20px 50px rgba(0,0,0,0.2), 
+        inset 0 0 20px rgba(0,0,0,0.5); 
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+   transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Efecto Hover: El celular se eleva y gira un poquito */
+.social-card:hover .phone-frame {
+    transform: translateY(-15px) rotateY(5deg);
+    box-shadow: 
+        20px 30px 60px rgba(0,0,0,0.3),
+        inset 0 0 20px rgba(0,0,0,0.5);
+    border-color: #222;
+}
+
+/* Badge (Etiqueta Flotante encima del cel) */
+.social-badge {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 3;
+    font-size: 0.9rem;
+    display: flex; align-items: center; gap: 8px;
+    transition: transform 0.3s;
+}
+
+/* Color específico para TikTok */
+.badge-tiktok {
+    background: #000000;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.social-card:hover .social-badge {
+    transform: scale(1.1);
+}
+
+/* Ajustes para los Embeds dentro del marco */
+.instagram-media, .tiktok-embed {
+    margin: 0 !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    min-width: 100% !important;
+    /* Truco para centrar contenido verticalmente si sobra espacio */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+}
+
+/* Blobs Decorativos (Manchas de color detrás) */
+.decorative-blob {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(60px); /* Efecto difuminado */
+    z-index: 1;
+    opacity: 0.6;
+    transition: all 0.5s ease;
+}
+
+.blob-1 {
+    background: rgba(0, 0, 153, 0.3); /* Azul Yza */
+    top: 50%; left: -20px;
+    transform: translate(-50%, -50%);
+}
+
+.blob-2 {
+    background: rgba(0, 230, 0, 0.25); /* Verde Yza */
+    top: 50%; right: -20px;
+    transform: translate(50%, -50%);
+}
+
+.social-card:hover .decorative-blob {
+    opacity: 0.9;
+    width: 350px; /* La mancha crece al hover */
+}
+
+/* --- RESPONSIVE MÓVIL --- */
+@media (max-width: 768px) {
+    .social-grid {
+        flex-direction: column;
+        gap: 50px;
+    }
+    
+    .phone-frame {
+        height: 500px; /* Un poco más cortos en móvil para no scrollear tanto */
+        border-width: 5px; /* Borde más fino */
+    }
+    
+    .social-card:hover .phone-frame {
+        transform: translateY(-5px); /* Menos movimiento en móvil */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+}
+
+/* =========================================
+   ESTILOS PARA EL BADGE TIKTOK UNIFICADO
+   ========================================= */
+
+.unified-tiktok-badge {
+    display: inline-flex; /* Para que se ajuste al tamaño del texto */
+    align-items: center;
+    gap: 12px; /* Espacio entre icono y texto */
+    
+    background-color: #000000; /* Negro TikTok */
+    color: white;
+    text-decoration: none; /* Quitar subrayado de enlace */
+    
+    padding: 15px 40px; /* Más grande y prominente */
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 1.3rem; /* Letra más grande */
+    letter-spacing: 0.5px;
+    
+    /* Centrado y separación */
+    margin: 0 auto 50px auto; /* Margen grande abajo para separar de los celulares */
+    position: relative;
+    z-index: 5; /* Asegura que esté por encima de las manchas decorativas */
+    
+    /* Sombra y borde premium */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255, 255, 255, 0.15); /* Borde sutil brillante */
+    
+    transition: all 0.3s ease;
+}
+
+/* Efecto Hover en el Badge Unificado */
+.unified-tiktok-badge:hover {
+    transform: translateY(-5px) scale(1.02);
+    background-color: #111; /* Un poco más claro al hover */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(0, 230, 0, 0.3); /* Un toque de brillo verde Yza */
+    border-color: var(--accent-green); /* Borde verde al hover */
+}
+
+/* Ajuste del icono de TikTok */
+.unified-tiktok-badge i {
+    font-size: 1.5rem;
+    /* Efecto degradado sutil en el icono (opcional, si te gusta) */
+    /* background: linear-gradient(45deg, #69C9D0, #EE1D52);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+}
+
+/* Ajuste Responsive para el Badge */
+@media (max-width: 768px) {
+    .unified-tiktok-badge {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+    }
+    .unified-tiktok-badge i {
+        font-size: 1.3rem;
+    }
+}
+
+/* Pequeño ajuste al grid para que no quede muy pegado arriba */
+.social-grid {
+    padding-top: 10px;
+}
+
+/* --- NUEVOS ESTILOS: DIRECTORIO SOCIAL --- */
+
+.consultorios-landing .social-directory {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+
+.consultorios-landing .network-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 280px;
+}
+
+.consultorios-landing .network-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.consultorios-landing .network-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Botón Base Social */
+.consultorios-landing .social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background: white;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.consultorios-landing .social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.08);
+}
+
+/* Estilo Instagram */
+.consultorios-landing .btn-insta {
+    color: #C13584;
+}
+.consultorios-landing .btn-insta:hover {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    color: white;
+    border-color: transparent;
+}
+.consultorios-landing .gradient-text {
+    background: -webkit-linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Estilo Facebook */
+.consultorios-landing .btn-face {
+    color: #1877F2;
+}
+.consultorios-landing .btn-face:hover {
+    background: #1877F2;
+    color: white;
+    border-color: #1877F2;
+}
+
+/* Ajuste del Header de TikTok para centrarlo */
+.consultorios-landing .tiktok-header-area {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+}
